@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 
 body {
   font-family: "Oranienbaum", serif;
@@ -8,38 +11,57 @@ body {
 
 .page-container {
   background-color: #1c7c61;
-  min-height: calc(100vh - 40px);
+  min-height: calc(100vh);
   margin: auto;
   padding: 20px;
   justify-content: center;
+  transition: margin-left 0.3s ease; 
+  margin-left: 0;
+}
+
+.page-container.shifted 
+{
+  margin-left: 250px; /* mesmo tamanho do aside */
 }
 
 header {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   color: rgb(242, 238, 238);
   margin-bottom: 20px;
+  transition: margin-left 0.3s ease; 
+
 }
 
 .page-title {
   font-size: 2rem;
+  justify-self: center;
 }
 
+/*Aba de cadastrar doações */
 .card-area {
-  background: rgb(234, 220, 220);;
+  background: rgb(234, 220, 220);
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.3s ease; 
+  margin-left: 0;
 }
 
 .donation-details {
   display: grid;
-  grid-template-columns: 1fr; /* p mobile: 1 coluna (tudo abaixo do outro) */
+  /* grid-template-columns: 1fr;  p mobile: 1 coluna (tudo abaixo do outro) */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+
 }
 
 .donation-details div {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .donation-details label {
@@ -49,15 +71,19 @@ header {
 
 .donation-details input {
   padding: 10px;
+  margin: 0;
   border: 1px solid #ccc;
   border-radius: 6px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-button {
+.donation-details button {
   grid-column: 1 / -1; /* isso faz o botão ficar no meio das duas colunas 1fr1r*/
   margin: auto;
   padding: 12px;
-  background:#1e6c46;
+  background: #155e49;
   border: none;
   border-radius: 6px;
   font-size: 1rem;
@@ -66,20 +92,110 @@ button {
   transition: background 0.2s ease-in;
 }
 
-button:hover {
+.donation-details button:hover {
   background: #234937;
 }
 
-/* Responsividade: no desktop vira 2 colunas(inputs lado a lado) e em celular fica 1 (abaixo)*/
+/*Menu lateral */
 
-@media (min-width: 490px) {
-    .donation-details {
-        grid-template-columns: 1fr ;
-    }
+.open-menu {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  left: 1rem
+}
+.hidden{
+  display: none;
 }
 
-@media  (min-width:491px ) {
-    .donation-details {
-        grid-template-columns: 1fr 1fr;
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -250px; /* começa escondido fora da tela */
+  width: 250px;
+  height: 100vh;
+  background: rgb(234, 220, 220);
+  color: rgb(0, 0, 0);
+  padding: 1rem;
+  transition: left 0.3s ease;
+  z-index: 1000; 
+}
+
+.side-menu.open {
+  left: 0;
+}
+
+/* botão de fechar */
+.close-menu {
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+/* links das abas do side menu e do nav mobile */
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+}
+.side-menu li {
+  margin: 1rem 0;
+}
+.side-menu a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+/*menu do mobile */
+
+.mobile-nav {
+  display: none;
+}
+/* Responsividade: no desktop vira 2 colunas(inputs lado a lado) e em celular fica 1 (abaixo)*/
+
+@media (min-width: 200px) and (max-width: 490px) {
+  .donation-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 491px) {
+  .donation-details {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 670px) {
+  .side-menu,
+  .open-menu{ display: none;} /*Aquie sconde o menu lateral */
+  .page-container {padding-bottom: 60px}
+  .mobile-nav {
+    display: block;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 7px;
+    width: 100%;
+    background: rgb(234, 220, 220);
+    color: white;
+    box-shadow: 0 -2px 8px rgba(24, 23, 23, 0.2);
+    z-index: 1000;
     }
+
+  .mobile-nav button {
+    flex: 1;
+    margin: 3px;
+    padding: 10px;
+    background: #207960;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+  }
 }
