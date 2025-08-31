@@ -150,11 +150,12 @@ header {
   text-decoration: none;
 }
 
-/*menu do mobile */
+/*menu do mobile, fica escondido se for desktop */
 
 .mobile-nav {
   display: none;
 }
+
 /* Responsividade: no desktop vira 2 colunas(inputs lado a lado) e em celular fica 1 (abaixo)*/
 
 @media (min-width: 200px) and (max-width: 490px) {
